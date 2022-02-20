@@ -1,0 +1,34 @@
+class Solution {
+private:
+    int calc(int t1, int t2, string c) {
+        if(c == "+")
+            return t1 + t2;
+        else if (c == "-")
+            return t1 - t2;
+        else if(c == "*")
+            return t1 * t2;
+        else if(c == "/")
+            return t1 / t2;
+        return -1;
+    }
+public:
+    int evalRPN(vector<string>& s) {
+        
+        stack<int> st;
+        for(int i = 0; i < s.size(); i++) {
+            string c = s[i];
+			// check if current string is an operator then calculate else(integer) push to stack
+            if(c == "+" || c == "-" || c == "*" || c == "/") {
+                int t1 = st.top();
+                st.pop();
+                int t2 = st.top();
+                st.pop();
+                int ans = calc(t2, t1, c);
+                st.push(ans);
+            }
+            else 
+                st.push(stoi(s[i]));
+        }
+        return st.top();
+    }
+};
